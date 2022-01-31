@@ -17,7 +17,6 @@ class PostController extends Controller
     {
         //
         $posts= Post::all();
-        dump($posts);
 
         return view('admin.posts.index',compact('posts'));
     }
