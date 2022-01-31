@@ -24,4 +24,14 @@ Route::get('/', function () {
 Auth::routes();
 
 //ROTTE AREA ADMIN
-Route::get('/home', 'HomeController@index')->name('home');
+//dobbiamo puntare ad Admin/Homecontroller@index
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth') //Rotte nel gruppo protette da auth(autenticazione)
+->namespace('Admin') //aggiunta di Admin/Homecontroller@index
+->name('admin.home')//nome della rotta
+->prefix('admin')//prefisso per cui tutti gli url iniziano con /admin/
+->group(function(){
+    //ADMIN HOMEPAGE
+    Route::get('/home', 'HomeController@index')->name('home');
+});
