@@ -29,6 +29,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -39,18 +40,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //VALIDATION
+        $request->validate([
+            'title' => 'required|,max:255',
+            'content' => 'required'
+        ]);
+
+        $data = $request->all();
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        //find si usa con id e no usiamo where 
+       $post= Post::where('slug',$slug)->first();
+
+       if(! $post){
+           abort(404);
+       }
+
+       return view('admin.posts.show',compact('post'));
     }
 
     /**
