@@ -6,8 +6,8 @@
     <h1 class="mb-5">{{$post->title}}</h1>
 
     <div class="mb-5">
-        <a href="{{route('admin.posts.edit', $post->id)}}">Edit</a>
-        <a href="{{route('admin.posts.index')}}">Back to archive</a>
+        <a class="btn btn-warning" href="{{route('admin.posts.edit', $post->id)}}">Edit</a>
+        <a class="btn btn-primary" href="{{route('admin.posts.index')}}">Back to archive</a>
     </div>
     
     <div class="row">

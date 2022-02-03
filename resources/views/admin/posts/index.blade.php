@@ -4,6 +4,13 @@
 <div class="container">
 <h1>Blog Posts</h1>
 
+@if(session('deleted'))
+<div class="alert alert-success">
+<strong>{{session('deleted')}}</strong>
+deleted syccessfully.
+</div>
+@endif
+
 @if($posts->isEmpty())
 <p>No post found yet <a href="{{route('admin.posts.create')}}">Create a new one</a> </p>
 @else
@@ -22,8 +29,13 @@
         <td>{{$post->id}}</td>
         <td>{{$post->title}}</td>
         <td><a class="btn btn-success" href="{{route('admin.posts.show', $post->slug)}}">Show</a></td>
-        <td>EDIT</td>
-        <td>DELETE</td>
+        <td><a class="btn btn-primary" href="{{route('admin.posts.edit', $post->id)}}">Edit</a></td>
+        <td><form action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
+        @csrf
+        @method('DELETE')
+
+        <input class="btn btn-danger" type="submit" value="Delete" />
+        </form></td>
     </tr>
     @endforeach
 </tbody>
