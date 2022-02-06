@@ -34,6 +34,25 @@
             <textarea class="form-control" type="text" name="content" id="content" rows="6">{{old('content', $post->content)}}</textarea>
         </div>
 
+        {{-- CATEGORIES --}}
+        <div class="mb-3">
+            <label for="category_id"></label>
+            <select class="form-control" name="category_id" id="category_id">
+                <option value="">Uncategorized</option>
+                @foreach ($categories as $category)
+                <option value="{{$category->id}}"
+                    @if($category->id == old('category_id', $post->category_id))selected @endif>
+                {{$category->name}}
+                </option>
+                @endforeach
+            </select>
+            @error('category_id')
+            <div class="text-danger">
+                {{$message}}
+            </div>
+            @enderror
+        </div>
+
         <button class="btn btn-primary" type="submit">Update Post</button>
     </form>
 </div>
