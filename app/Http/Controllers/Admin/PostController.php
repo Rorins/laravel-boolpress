@@ -83,7 +83,6 @@ class PostController extends Controller
         //find si usa con id e no usiamo where 
        $post= Post::where('slug',$slug)->first();
 
-       dump($post->category);
 
        if(! $post){
            abort(404);

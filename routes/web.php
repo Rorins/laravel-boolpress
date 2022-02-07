@@ -37,6 +37,9 @@ Route::middleware('auth') //Rotte nel gruppo protette da auth(autenticazione)
     
     //POSTS RESOURCE ROUTES
     Route::resource('/posts','PostController');
+
+    //CATEGORY PAGE ROUTE
+    Route::get('/categories/{id}','CategoryController@show')->name('category');
 });
 
 //HOME FRONT - LAST ROUTE

@@ -19,6 +19,7 @@ deleted syccessfully.
     <tr>
         <th>ID</th>
         <th>Title</th>
+        <th>Category</th>
         <th colespan="3">Actions</th>
     </tr>
 </thead>
@@ -28,6 +29,12 @@ deleted syccessfully.
     <tr>
         <td>{{$post->id}}</td>
         <td>{{$post->title}}</td>
+        <td>
+            @if($post->category)
+            <a href="{{route('admin.category',$post->category->id)}}">{{$post->category->name}}</a>
+            @else Uncategorized 
+            @endif
+        </td>
         <td><a class="btn btn-success" href="{{route('admin.posts.show', $post->slug)}}">Show</a></td>
         <td><a class="btn btn-primary" href="{{route('admin.posts.edit', $post->id)}}">Edit</a></td>
         <td><form action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
