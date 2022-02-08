@@ -19,6 +19,17 @@
         <div class="col-md-6">Image here..</div>
     </div>
 
+    @if(!$post->tags->isEmpty())
+    <h4>Tags</h4>
+
+    @foreach ($post->tags as $tag)
+        <span class="badge badge-primary">
+            {{$tag->name}}
+        </span>
+    @endforeach
+    @else
+    <p> No tags for this post</p>
+    @endif
     
 </div>
 

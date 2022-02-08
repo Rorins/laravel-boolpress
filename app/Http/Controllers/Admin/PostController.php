@@ -20,8 +20,9 @@ class PostController extends Controller
     {
         //
         $posts= Post::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.index',compact('posts'));
+        return view('admin.posts.index',compact('posts','tags'));
     }
 
     /**
@@ -110,12 +111,13 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
         if(! $post){
             abort(404);
         }
 
-        return view('admin.posts.edit',compact('post','categories'));
+        return view('admin.posts.edit',compact('post','categories','tags'));
     }
 
     /**
@@ -157,6 +159,15 @@ class PostController extends Controller
 
         $post->update($data);
 
+        //UPDATE RELAZIONI PIVOT POST AGGIORNATO E TAGS
+        if(array_key_exists('tags',$data)){
+            //update tags
+            $post->tags()->sync($data['tags']);
+        }else{
+            //bessyb checkbox per tags selezionato nella form
+            $post->tags()->detach();
+        }
+
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -171,6 +182,8 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         $post->delete();
+
+        // $post->tags()->detach();
 
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }

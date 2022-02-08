@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<section class="container">
 <h1>Blog Posts</h1>
 
 @if(session('deleted'))
 <div class="alert alert-success">
 <strong>{{session('deleted')}}</strong>
-deleted syccessfully.
+deleted successfully.
 </div>
 @endif
 
@@ -48,5 +48,28 @@ deleted syccessfully.
 </tbody>
 </table>
 @endif
-</div>
+</section>
+
+<section class="container">
+<h2>Posts by Tag</h2>
+@foreach ($tags as $tag )
+    <h3>{{$tag->name}}</h3>
+
+    @if($tag->posts->isEmpty())
+    <p>No post for this tag</p>
+    @else
+    <ul>
+        @foreach ($tag->posts as $post)
+           <li>
+               <a href="{{route('admin.posts.show',$post->slug)}}">{{$post->title}}</a>
+           </li>
+        @endforeach
+    </ul>
+
+    @endif
+
+ 
+
+@endforeach
+</section>
 @endsection
