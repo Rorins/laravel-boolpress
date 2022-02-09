@@ -1929,13 +1929,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
   components: {},
   data: function data() {
     return {
-      posts: null
+      posts: null,
+      pagination: null
     };
   },
   created: function created() {
@@ -1945,9 +1959,14 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       //AXIOS CALL
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts').then(function (res) {
-        _this.posts = res.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts?page=${page}').then(function (res) {
+        _this.posts = res.data.data;
+        _this.pagination = {
+          current: res.data.current_page,
+          last: res.data.last_page
+        };
       });
     },
     getExcerpt: function getExcerpt(text, maxLenght) {
@@ -3101,26 +3120,58 @@ var render = function () {
     _vm.posts
       ? _c(
           "div",
-          _vm._l(_vm.posts, function (post) {
-            return _c(
-              "article",
-              { key: "post-" + post.id + " ", staticClass: "mb-4" },
-              [
-                _c("h2", [_vm._v(_vm._s(post.title))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-4" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.formatDate(post.created_at)) +
-                      "\n            "
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.getExcerpt(post.content, 100)))]),
-              ]
-            )
-          }),
-          0
+          [
+            _vm._l(_vm.posts, function (post) {
+              return _c(
+                "article",
+                { key: "post-" + post.id + " ", staticClass: "mb-4" },
+                [
+                  _c("h2", [_vm._v(_vm._s(post.title))]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mb-4" }, [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.formatDate(post.created_at)) +
+                        "\n            "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(_vm.getExcerpt(post.content, 100)))]),
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mr-3",
+                attrs: { disabled: _vm.pagination.current === 1 },
+                on: {
+                  click: function ($event) {
+                    return _vm.getPosts(_vm.pagination.current - 1)
+                  },
+                },
+              },
+              [_vm._v("\n            Prev\n        ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mr-3",
+                attrs: {
+                  disabled: _vm.pagination.current === _vm.pagination.last,
+                },
+                on: {
+                  click: function ($event) {
+                    return _vm.getPosts(_vm.pagination.current + 1)
+                  },
+                },
+              },
+              [_vm._v("\n            Next\n        ")]
+            ),
+          ],
+          2
         )
       : _c("div", [_vm._v("\n        Loading\n    ")]),
   ])
