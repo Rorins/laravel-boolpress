@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//URL iniziano con slash API
+
+Route::get('/test', function(){
+
+    //Return JSON DATA
+    return response()->json([
+        'clients' => ['Paolo','Giorgio','Marta'],
+        'lorem' => 'ipsum'
+    ]);
+});
+
+//ENDPOINT API
+Route::namespace('Api')->group(function(){
+    //POST ARCHIVE
+    Route::get('/posts','PostController@index');
 });
