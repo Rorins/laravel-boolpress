@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-    <h1>FRONT OFFICE</h1>
     <div id="root">
 
     </div>
