@@ -25,6 +25,10 @@ class PostController extends Controller
         //senza cat tags
         $post = Post::where('slug',$slug)->with(['category','tags'])->first();
 
+        if(!$post){
+            $post['not_found'] = true;
+        }
+
         //ritorno dati json
 
         return response()->json($post);

@@ -5,21 +5,29 @@
       <div v-if="post">
           <h1>{{post.title}}</h1>
 
+          <h4>Category:{{post.category.name}}</h4>
+
+          <Tags :list="post.tags" />
           <p>{{post.content}}</p>
+      
       </div>
 
-      <div v-else>
-          Loading..
-      </div>
+      <Loader text="Loading posts" v-else/>
 
   </section>
 </template>
 
 <script>
 import axios from 'axios';
+import Tags from '../components/Tags';
+import Loader from '../components/Loader';
 
 export default {
 name:'PostDetail',
+components:{
+    Tags,
+    Loader,
+},
 data(){
     return{
         post:null
@@ -27,15 +35,20 @@ data(){
 },
 created(){
     this.getPostDetail();
-    console.log('API CALL')
 },
 methods:{
     getPostDetail(){
         //Get post from api
         axios.get(`http://127.0.0.1:8000/api/posts/${this.$route.params.slug}`)
         .then(res =>{
-            console.log(res.data);
-            this.post = res.data;
+         
+
+            if(res.data.not_found){
+                this.$router.push({name:'not-found'})
+            }else{
+                this.post = res.data;
+            }
+            
         })
         .catch(err=> log.error(err))
     }
