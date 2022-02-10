@@ -1,6 +1,7 @@
 <template>
   <div class="container">
       <h1 class="my-5">Our blog</h1>
+
       <div v-if="posts">
           <article class="mb-4" v-for="post in posts" :key=" `post-${post.id} `" >
               <h2>{{post.title}}</h2>
@@ -9,7 +10,8 @@
               </div>
               <p>{{getExcerpt(post.content,100)}}</p>
               <!-- Route con parametri dettagli -->
-                <router-link :to="{name: 'post-detail', params: {slug: post.slug}}">
+                <router-link :to="{name: 'post-detail',
+                 params: {slug: post.slug}}">
                   Read more
                 </router-link>
           </article>
@@ -63,7 +65,7 @@ this.getPosts();
 methods:{
     getPosts(page = 1){
         //AXIOS CALL
-        axios.get('http://127.0.0.1:8000/api/posts?page=${page}')
+        axios.get(`http://127.0.0.1:8000/api/posts?page=${page}`)
         .then(res=>{
             this.posts = res.data.data;
             this.pagination = {

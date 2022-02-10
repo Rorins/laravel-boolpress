@@ -2039,6 +2039,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2061,7 +2063,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       //AXIOS CALL
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts?page=${page}').then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts?page=".concat(page)).then(function (res) {
         _this.posts = res.data.data;
         _this.pagination = {
           current: res.data.current_page,
@@ -2135,6 +2137,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostDetail',
@@ -2145,13 +2149,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getPostDetail();
+    console.log('API CALL');
   },
   methods: {
     getPostDetail: function getPostDetail() {
       var _this = this;
 
       //Get post from api
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts/$(this.$route.params.slug)").then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts/".concat(this.$route.params.slug)).then(function (res) {
         console.log(res.data);
         _this.post = res.data;
       })["catch"](function (err) {
@@ -19544,7 +19549,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _pages_About__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/blog',
-    name: 'about',
+    name: 'blog',
     component: _pages_Blog__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/blog/:slug',
