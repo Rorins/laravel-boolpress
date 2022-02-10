@@ -17,5 +17,16 @@ class PostController extends Controller
 
         return response()->json($posts);
     }
+
+    //Post detail
+    public function show($slug){
+        //prendere post slug 
+
+        //senza cat tags
+        $post = Post::where('slug',$slug)->with(['category','tags'])->first();
+
+        //ritorno dati json
+
+        return response()->json($post);
+    }
 }
-//ENDPOINT PER LE API

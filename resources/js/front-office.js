@@ -4,8 +4,12 @@
 import Vue from 'vue';
 import App from './views/App';
 
+//APP ROUTER.JS
+import router from './routes';
+
 //INIT VUE INSTANCE
 const root = new Vue({
     el:'#root',
-    render:h=>h(App),
+    router,
+    render:h =>h(App),
 })

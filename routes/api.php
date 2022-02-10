@@ -29,4 +29,7 @@ Route::get('/test', function(){
 Route::namespace('Api')->group(function(){
     //POST ARCHIVE
     Route::get('/posts','PostController@index');
+
+    //single post detail
+    Route::get('/posts/{slug}','PostController@show');
 });
